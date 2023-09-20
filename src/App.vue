@@ -196,7 +196,7 @@ const back_image = ref("url(" + url_forest1 + ")")
 const Location = ref('Entrance')
 
 const msc_back = new Audio(); //背景音
-msc_back.volume = 0.3;
+msc_back.volume = 0.2;
 
 const msc_eft = new Audio(); //効果音
 msc_eft.volume = 1.0;
@@ -226,7 +226,7 @@ const uttr = new SpeechSynthesisUtterance()
 uttr.lang = "ja-JP" // 言語を設定
 uttr.rate = 0.65     // 速度を設定
 uttr.pitch = 0    // 高さを設定
-uttr.volume = 0.9     // 音量を設定
+uttr.volume = 1.0     // 音量を設定
 
 // 音声ゲット（初回）
 var voices = speechSynthesis.getVoices();
@@ -854,6 +854,8 @@ body {
   background-image: v-bind(back_image);
   background-position: center top;
   height: 100vh;
+  max-width: 1024px;
+  margin :auto;
   text-align: center;
 }
 
@@ -861,7 +863,7 @@ body {
   /*スマホでは縦横100%  PCでは縦のみ100%*/
   height: 100%;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1024px;
   object-fit: cover;
 }
 
