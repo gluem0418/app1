@@ -14,7 +14,7 @@
         </div>
         <div class="btn-1" id="btn-a">
           <button @click="changeShow('Enter')">入る</button>
-          <!-- <button @click="changeShow('Outside1')">入る</button> -->
+          <!-- <button @click="changeShow('Back1')">入る</button> -->
         </div>
         <div class="btn-1" id="btn-b">
           <button onclick="window.history.back()">入らない</button>
@@ -365,7 +365,7 @@ function changeShow(str_select) {
           translateY: -200,
           scale: [1, 3],
           duration: 4000,
-          rotate: 90,
+          rotate: 180,
           easing: 'easeInOutCubic' // 加減速の種類
         });
         // 現在地更新
@@ -406,11 +406,12 @@ function changeShow(str_select) {
       showItem3.value = 1;
       anime({
         targets: '.img-item2',
-        translateY: -200,
+        translateY:[0, -150],
         translateX: -50,
-        scale: [1, 3],
+        scale: [1, 2],
         duration: 4000,
-        rotate: 180,
+        rotate: [0, 180],
+        // easing: 'linear' // 加減速の種類
         easing: 'easeInOutCubic' // 加減速の種類
       });
       // 現在地更新
@@ -443,8 +444,8 @@ function changeShow(str_select) {
       showItem4.value = 1;
       anime({
         targets: '.img-item3',
-        translateY: [-100, 150, 0],
-        translateX: [300, -200, 0],
+        translateY: [-100, 200, 0],
+        translateX: [200, -300, 0],
         opacity: [0.5, 1],
         scale: [0.5, 3],
         duration: 15000,
@@ -467,7 +468,7 @@ function changeShow(str_select) {
       showItem5.value = 1;
       anime({
         targets: '.img-item1',
-        translateX: [300, -200, 100],
+        translateX: [200, -200, 0],
         translateY: [-200, 100, -100],
         scale: [1, 2],
         duration: 5000,
@@ -501,7 +502,7 @@ function changeShow(str_select) {
         targets: '.img-item1',
         duration: 3000,
         rotate: 300,
-        translateY: 100,
+        translateY: -100,
         easing: 'easeInOutCubic' // 加減速の種類
       });
       // 効果音
@@ -536,9 +537,11 @@ function changeShow(str_select) {
           easing: 'easeInCubic' // 加減速の種類
           // easing: 'linear' // 加減速の種類
         });
-        // 現在地更新
+      }, 15000);
+      // 現在地更新
+      timeId = setTimeout(() => {
         Location.value = 'Outside2';
-      }, 20000);
+      }, 30000);
       break;
     case 'Outside3':
       // 場面展開
@@ -850,33 +853,35 @@ body {
 
 .img-item1 {
   position: absolute;
-  top: 70%;
-  left: 30%;
+  top: 65%;
+  left: 25%;
   height: 25%;
+  /* transform: translateY(-50%) translateX(-50%); */
 }
 
 .img-item2 {
   position: absolute;
-  top: 70%;
-  left: 30%;
+  top: 65%;
+  left: 20%;
   height: 25%;
 }
 
 .img-item3 {
   position: absolute;
   top: 35%;
-  left: 30%;
+  left: 15%;
+  /* height: 100%; */
+  /* width: 100%; */
 }
-
 /* タイトル */
 .main-title {
   font-family: "Segoe Script";
   margin: auto;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
   font-weight: bold;
   animation: main-title 5s linear;
-  font-size: 48px;
+  font-size: 60px;
   color: red;
 }
 
@@ -887,13 +892,11 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* margin: auto; */
-  /* white-space: nowrap; */
   /* overflow: hidden; */
-  word-break: normal;
+  /* word-break: normal; */
   font-weight: bold;
   animation: main-title 10s linear;
-  font-size: 65px;
+  font-size: 45px;
   color: red;
 }
 
@@ -931,52 +934,36 @@ body {
 
 #btn-a {
   position: absolute;
-  top: 70%;
+  top: 65%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
 }
 
 #btn-b {
   position: absolute;
-  top: 90%;
+  top: 85%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
 }
 
 #btn-c {
   position: absolute;
-  top: 80%;
+  top: 75%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
 }
 
 /***ストーリー***/
 .txt-story {
-  font-size: 28px;
+  font-size: 26px;
   margin: auto;
   max-width: 700px;
   word-break: normal;
+  /* text-align: left; */
   /* color: lightsteelblue; */
   color: burlywood;
   overflow: hidden;
   white-space: pre-wrap;
 }
 
-/*** 文字アニメーション ***/
-@keyframes fadeIn {
-  0% {
-    opacity: 0.5;
-    transform: translateY(100%);
-  }
-
-  50% {
-    opacity: 1;
-    transform: translateY(50%);
-  }
-
-  100% {
-    opacity: 0.5;
-    transform: translateY(0%);
-  }
-}
 </style>
