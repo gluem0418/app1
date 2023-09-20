@@ -226,7 +226,10 @@ const uttr = new SpeechSynthesisUtterance()
 uttr.lang = "ja-JP" // 言語を設定
 uttr.rate = 0.65     // 速度を設定
 uttr.pitch = 0    // 高さを設定
-uttr.volume = 0.8     // 音量を設定
+uttr.volume = 0.9     // 音量を設定
+
+// 音声ゲット（初回）
+var voices = speechSynthesis.getVoices();
 
 src_item1.value = url_item1
 src_item2.value = url_item2
@@ -245,6 +248,7 @@ function changeShow(str_select) {
   switch (str_select) {
     // 入口 入る
     case 'Enter':
+      get_Voice();
       //場面転換'
       backFade(url_forest2);
       changeMsc(msc_kimyo);
@@ -406,7 +410,7 @@ function changeShow(str_select) {
       showItem3.value = 1;
       anime({
         targets: '.img-item2',
-        translateY:[0, -150],
+        translateY: [0, -150],
         translateX: -50,
         scale: [1, 2],
         duration: 4000,
@@ -676,7 +680,17 @@ function initChange() {
   showHorror.value = 0;
   cnt_click = 0;
 }
-
+  // 音声ゲット
+function get_Voice() {
+  var voice = speechSynthesis.getVoices().find(function (voice) {
+    // console.log(voice.name);
+    return voice.name === 'Microsoft Ichiro - Japanese (Japan)';
+  });
+  // 取得できた場合のみ適用する
+  if (voice) {
+    uttr.voice = voice;
+  }
+}
 // エフェクト音再生
 function eft_Play(msc) {
   msc_eft.src = msc;
@@ -873,6 +887,7 @@ body {
   /* height: 100%; */
   /* width: 100%; */
 }
+
 /* タイトル */
 .main-title {
   font-family: "Segoe Script";
@@ -965,5 +980,4 @@ body {
   overflow: hidden;
   white-space: pre-wrap;
 }
-
 </style>
