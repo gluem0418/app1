@@ -941,17 +941,18 @@ body {
   font-size: 36px;
   color: red;
   text-align: center;
-  /* font-weight: bold; */
   text-decoration: none;
   outline: none;
   /*はみ出す背景色を隠す*/
   overflow: hidden;
   border-radius: 10px;
   transition: all 300ms ease-in-out;
+  box-shadow: 0 0 10px 4px maroon;
+  background: rgba(0,0,0,0.5);
 }
 
 .btn-1:hover {
-  box-shadow: 0 0 10px 4px maroon;
+  /* box-shadow: 0 0 10px 4px maroon; */
   background: black;
 }
 
