@@ -330,7 +330,7 @@ function changeShow(str_select) {
         timeId = setTimeout(() => {
           Location.value = 'Upstairs4';
           act_item1 = 1;
-        }, 10000);
+        }, 7000);
       }
       break;
     // 二階 一階奥へ
@@ -680,7 +680,7 @@ function initChange() {
   showHorror.value = 0;
   cnt_click = 0;
 }
-  // 音声ゲット
+// 音声ゲット
 function get_Voice() {
   var voice = speechSynthesis.getVoices().find(function (voice) {
     // console.log(voice.name);
@@ -760,7 +760,7 @@ function anime_Horror(image) {
       { value: 0, duration: randRange(0, 1000), delay: randRange(0, 1000) }
     ],
     opacity: [0, 1],
-    scale: [0, 1, 0.1, 1],
+    scale: [0, 0.5, 0.1, 1],
     duration: 5000,
     rotate: 360,
     easing: 'easeInOutBounce', // 加減速の種類
@@ -855,16 +855,22 @@ body {
   background-position: center top;
   height: 100vh;
   max-width: 1024px;
-  margin :auto;
+  margin: auto;
   text-align: center;
 }
 
 .img-horror {
-  /*スマホでは縦横100%  PCでは縦のみ100%*/
-  height: 100%;
-  width: 100%;
-  max-width: 1024px;
-  object-fit: cover;
+  margin: auto
+}
+
+@media screen and (max-width: 480px) {
+  /* 480px以下に適用されるCSS（スマホ用） */
+  .img-horror {
+    position: absolute;
+    top: 0%;
+    left: -50%;
+    height: 100%;
+  }
 }
 
 .img-item1 {
