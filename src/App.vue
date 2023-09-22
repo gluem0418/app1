@@ -10,7 +10,7 @@
       <!-- 最初の表示 -->
       <div v-if="Location == 'Entrance'">
         <div class="main-title">
-          Horror Of Bottom
+          End Of Fear
         </div>
         <div class="btn-1" id="btn-a">
           <button @click="changeShow('Enter')">入る</button>
@@ -98,7 +98,7 @@
       </div>
 
       <div class="end-title" v-show="showEnd">
-        Horror Of Bottom
+        End Of Fear
       </div>
 
     </div>
@@ -846,7 +846,7 @@ onMounted(() => {
 <style>
 body {
   font-family: "ふぉんとうは怖い明朝体";
-  background-color: black;
+  background-color: #150813;
   /* max-width: 1000px; */
 }
 
@@ -905,7 +905,7 @@ body {
   font-weight: bold;
   animation: main-title 5s linear;
   font-size: 60px;
-  color: red;
+  color: #DD0000;
 }
 
 /* タイトル */
@@ -919,8 +919,8 @@ body {
   /* word-break: normal; */
   font-weight: bold;
   animation: main-title 10s linear;
-  font-size: 45px;
-  color: red;
+  font-size: 76px;
+  color: #DD0000;
 }
 
 /* タイトルアニメーション */
@@ -936,10 +936,11 @@ body {
 
 /* ボタン共通 */
 .btn-1 {
-  width: 300px;
+  width: 250px;
   padding: 3px;
   font-size: 36px;
-  color: red;
+  /* font-weight:bold; */
+  color: #DD0000;
   text-align: center;
   text-decoration: none;
   outline: none;
@@ -947,13 +948,13 @@ body {
   overflow: hidden;
   border-radius: 10px;
   transition: all 300ms ease-in-out;
-  box-shadow: 0 0 10px 4px maroon;
-  background: rgba(0,0,0,0.5);
+  box-shadow: 0 0 10px 4px #999999;
+  background: rgba(21,8,19,0.5);
 }
 
 .btn-1:hover {
   /* box-shadow: 0 0 10px 4px maroon; */
-  background: black;
+  background: #150813;
 }
 
 #btn-a {
@@ -979,13 +980,12 @@ body {
 
 /***ストーリー***/
 .txt-story {
-  font-size: 26px;
+  font-size: 24px;
   margin: auto;
   max-width: 700px;
   word-break: normal;
   /* text-align: left; */
-  /* color: lightsteelblue; */
-  color: burlywood;
+  color: lightsteelblue;
   overflow: hidden;
   white-space: pre-wrap;
 }
