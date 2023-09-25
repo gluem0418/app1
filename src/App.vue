@@ -10,7 +10,7 @@
       <!-- 最初の表示 -->
       <div v-if="Location == 'Entrance'">
         <div class="main-title">
-          End Of Fear
+          The End Of Fear
         </div>
         <div class="btn-1" id="btn-a">
           <button @click="changeShow('Enter')">入る</button>
@@ -98,7 +98,7 @@
       </div>
 
       <div class="end-title" v-show="showEnd">
-        End Of Fear
+        The End Of Fear
       </div>
 
     </div>
@@ -904,7 +904,7 @@ body {
   overflow: hidden;
   font-weight: bold;
   animation: main-title 5s linear;
-  font-size: 60px;
+  font-size: 68px;
   color: #DD0000;
 }
 
@@ -919,7 +919,7 @@ body {
   /* word-break: normal; */
   font-weight: bold;
   animation: main-title 10s linear;
-  font-size: 76px;
+  font-size: 68px;
   color: #DD0000;
 }
 
