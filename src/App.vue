@@ -4,7 +4,13 @@
     <div class="background" @click="displayClick()">
 
       <!-- 物語テキスト表示用 -->
-      <div v-text="txt_story" class="txt-story"></div>
+      <!-- <div v-text="txt_story" c></div> -->
+      <div class="txt-story" v-for="(storyline, lineindex) in txt_story" :key="lineindex">
+        {{ storyline }}
+      </div>
+      <!-- <div class="txt-story">
+        {{ storytext }}
+      </div> -->
       <!-- ホラーアニメーション用 -->
       <img class="img-horror" :src="src_horror" v-show="showHorror">
       <!-- 最初の表示 -->
@@ -51,7 +57,8 @@
         </div>
       </div>
       <!-- 2階 -->
-      <img class="img-item1" :src="src_item1" @click="changeShow('Upstairs3')" v-show="showItem1">
+      <!-- <img class="img-item1" :src="src_item1" @click="changeShow('Upstairs3')" v-show="showItem1"> -->
+      <img class="img-item1" :src="src_item1" @click="getItem('Upstairs3')" v-show="showItem1">
       <!-- 2階ゲット後 -->
       <div v-if="Location == 'Upstairs4'">
         <div class="btn-1" id="btn-a">
@@ -62,7 +69,7 @@
         </div>
       </div>
       <!-- 1階奥 -->
-      <img class="img-item2" :src="src_item2" @click="changeShow('Back3')" v-show="showItem2">
+      <img class="img-item2" :src="src_item2" @click="getItem('Back3')" v-show="showItem2">
       <!-- 1階ゲット後 -->
       <div v-if="Location == 'Back4'">
         <div class="btn-1" id="btn-a">
@@ -194,6 +201,7 @@ const msg_alert = 'このサイトでは恐怖を与える表現が含まれて�
 // 初期設定
 const back_image = ref("url(" + url_forest1 + ")")
 const Location = ref('Entrance')
+document.onselectstart = () => false;
 
 const msc_back = new Audio(); //背景音
 msc_back.volume = 0.2;
@@ -202,7 +210,6 @@ const msc_eft = new Audio(); //効果音
 msc_eft.volume = 1.0;
 
 const src_horror = ref('')
-const txt_story = ref('')
 const src_item1 = ref('')
 const src_item2 = ref('')
 const src_item3 = ref('')
@@ -213,6 +220,10 @@ const showItem3 = ref(false)
 const showItem4 = ref(false)
 const showItem5 = ref(false)
 const showEnd = ref(false)
+
+const txt_story = ref([])
+let storyLines = []; // 
+let LineIndex = 0; // 現在表示中の行のインデックス
 
 // const showHorror = ref(0)
 let cnt_click = 0;
@@ -230,6 +241,8 @@ uttr.volume = 1.0     // 音量を設定
 
 // 音声ゲット（初回）
 var voices = speechSynthesis.getVoices();
+// uttr.text = 'テスト';
+// window.speechSynthesis.speak(uttr);
 
 src_item1.value = url_item1
 src_item2.value = url_item2
@@ -252,86 +265,35 @@ function changeShow(str_select) {
       //場面転換'
       backFade(url_forest2);
       changeMsc(msc_kimyo);
-      // テキスト再生
-      readStory(txt_story1);
-      // 効果音
       eft_Play(se_tuchi);
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Forest';
-      }, 50000);
+      loadStory(txt_story1);
       break;
     // 森 進む
     case 'Move_on':
       //場面転換
       backFade(url_mansion1);
       changeMsc(msc_buriki);
-      // テキスト再生
-      readStory(txt_story2);
-      // 効果音
       eft_Play(se_tuchi);
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Front';
-      }, 35000);
+      loadStory(txt_story2);
       break;
     // 館の前 入る
     case 'Into':
       //場面転換
       backFade(url_entrance1);
       changeMsc(msc_kokun);
-      // テキスト再生
-      readStory(txt_story3);
-      // 効果音
       eft_Play(se_door1)
       setTimeout(() => {
         eft_Play(se_door2)
       }, 3000);
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Lobby';
-      }, 45000);
+      loadStory(txt_story3);
       break;
     // ロビー 二階へ
     case 'Upstairs1':
       //場面転換
       backFade(url_upstairs1);
       changeMsc(msc_tsukiyo);
-      // テキスト再生
-      readStory(txt_story4);
-      // 効果音
+      loadStory(txt_story4);
       eft_Play(se_ashioto1)
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Upstairs2';
-        showItem1.value = 1;
-      }, 25000);
-      break;
-    // ぬいぐるみゲット
-    case 'Upstairs3':
-      if (act_item1 == 1) {
-        Location.value = 'Upstairs4';
-        break;
-      } else {
-        // テキスト再生
-        readStory(txt_story5);
-        // 効果音
-        eft_Play(se_rei_warai)
-        // アニメーション
-        anime({
-          targets: '.img-item1',
-          translateY: -200,
-          scale: [1, 3],
-          duration: 5000,
-          rotate: 330,
-          easing: 'easeInOutCubic' // 加減速の種類
-        });
-        // 現在地更新
-        timeId = setTimeout(() => {
-          Location.value = 'Upstairs4';
-          act_item1 = 1;
-        }, 7000);
-      }
       break;
     // 二階 一階奥へ
     case 'Back1':
@@ -340,44 +302,11 @@ function changeShow(str_select) {
       act_item1 = 0;
       backFade(url_back1);
       changeMsc(msc_ankoku);
-      // テキスト再生
-      readStory(txt_story6);
-      // 効果音
       eft_Play(se_ashioto1)
       setTimeout(() => {
         eft_Play(se_moujya)
       }, 10000);
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Back2';
-        showItem2.value = 1;
-      }, 25000);
-      break;
-    // ２階鍵ゲット
-    case 'Back3':
-      if (act_item2 == 1) {
-        Location.value = 'Back4';
-        break;
-      } else {
-        // テキスト再生
-        readStory(txt_story7);
-        // 効果音
-        eft_Play(se_rei_voice)
-        // アニメーション
-        anime({
-          targets: '.img-item2',
-          translateY: -200,
-          scale: [1, 3],
-          duration: 4000,
-          rotate: 180,
-          easing: 'easeInOutCubic' // 加減速の種類
-        });
-        // 現在地更新
-        timeId = setTimeout(() => {
-          Location.value = 'Back4';
-          act_item2 = 1;
-        }, 6000);
-      }
+      loadStory(txt_story6);
       break;
     // 一階 地下室へ
     case 'Basement1':
@@ -385,27 +314,20 @@ function changeShow(str_select) {
       showItem2.value = 0;
       backFade(url_basement1);
       changeMsc(msc_entoro);
-      // テキスト再生
-      readStory(txt_story8);
-      // 効果音
       eft_Play(se_ashioto1)
       setTimeout(() => {
         eft_Play(se_zowawa)
       }, 7000);
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Basement2';
-      }, 25000);
+      loadStory(txt_story8);
       break;
     // 地下室入口
     case 'Basement3':
-      // テキスト再生
-      readStory(txt_story9);
-      // 効果音
+      // 場面での処理
       eft_Play(se_kagi1)
       setTimeout(() => {
         eft_Play(se_door1)
       }, 2000);
+      loadStory(txt_story9);
       // アニメーション
       showItem3.value = 1;
       anime({
@@ -418,28 +340,17 @@ function changeShow(str_select) {
         // easing: 'linear' // 加減速の種類
         easing: 'easeInOutCubic' // 加減速の種類
       });
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Basement4';
-        changeShow('Basement4');
-      }, 5000);
       break;
     // 地下室へ
     case 'Basement4':
       //場面転換
       showItem3.value = 0;
       backFade(url_basement2);
-      // テキスト再生
-      readStory(txt_story10);
-      // 効果音
       eft_Play(vc_kimokimo)
       timeId = setTimeout(() => {
         eft_Play(vc_kimokimo)
       }, 10000);
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Basement5';
-      }, 25000);
+      loadStory(txt_story10);
       break;
     // 地下室、目の前に。。。
     case 'Basement6':
@@ -456,16 +367,12 @@ function changeShow(str_select) {
         easing: 'easeInOutCubic' // 加減速の種類
       });
       // テキスト再生
-      readStory(txt_story11);
+      loadStory(txt_story11);
       // 効果音
       eft_Play(vc_monster1)
       timeId = setTimeout(() => {
         eft_Play(vc_kai_gaaa)
       }, 6000);
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Basement7';
-      }, 13000);
       break;
     case 'Basement8':
       // アニメーション
@@ -491,7 +398,7 @@ function changeShow(str_select) {
       break;
     case 'Basement10':
       // テキスト再生
-      readStory(txt_story12);
+      loadStory(txt_story12);
       // 場面展開
       changeMsc(msc_ningyo);
       // アニメーション
@@ -511,10 +418,6 @@ function changeShow(str_select) {
       });
       // 効果音
       eft_Play(vc_devil1)
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Basement11';
-      }, 20000);
       break;
     // 外へ
     case 'Outside1':
@@ -524,7 +427,7 @@ function changeShow(str_select) {
       backFade(url_forest3);
       // テキスト再生
       // uttr.rate = 0.65     // 速度を設定
-      readStory(txt_story13);
+      loadStory(txt_story13);
       // 効果音
       eft_Play(se_ashioto1)
       timeId = setTimeout(() => {
@@ -542,10 +445,6 @@ function changeShow(str_select) {
           // easing: 'linear' // 加減速の種類
         });
       }, 15000);
-      // 現在地更新
-      timeId = setTimeout(() => {
-        Location.value = 'Outside2';
-      }, 30000);
       break;
     case 'Outside3':
       // 場面展開
@@ -584,7 +483,6 @@ function changeShow(str_select) {
         showEnd.value = 1
       }, 10000);
       break;
-
     case 'Exit1':
       // テキスト再生
       readStory(txt_horror1);
@@ -666,19 +564,199 @@ function changeShow(str_select) {
       anime_Horror(url_horror5)
       break;
     default:
-      console.log('その他');
+      console.log('エラーその他処理');
   }
-  return {
-  };
+}
+function getItem(str_select) {
+  //現在地変更
+  Location.value = str_select
+  //選択処理
+  switch (str_select) {
+    // ぬいぐるみゲット
+    case 'Upstairs3':
+      if (act_item1 == 1) {
+        break;
+      } else {
+        // 場面の処理
+        act_item1 = 1
+        initChange();
+        loadStory(txt_story5);
+        eft_Play(se_rei_warai)
+        // アニメーション
+        anime({
+          targets: '.img-item1',
+          translateY: -200,
+          scale: [1, 3],
+          duration: 5000,
+          rotate: 330,
+          easing: 'easeInOutCubic' // 加減速の種類
+        });
+      }
+      break;
+    // 一階鍵ゲット
+    case 'Back3':
+      if (act_item2 == 1) {
+        break;
+      } else {
+        act_item2 = 1
+        initChange();
+        eft_Play(se_rei_voice)
+        loadStory(txt_story7);
+        // アニメーション
+        anime({
+          targets: '.img-item2',
+          translateY: -200,
+          scale: [1, 3],
+          duration: 4000,
+          rotate: 180,
+          easing: 'easeInOutCubic' // 加減速の種類
+        });
+      }
+      break;
+
+    default:
+      console.log('エラーその他処理');
+  }
 }
 
+// 画面をクリックした時
+function displayClick() {
+  //場面毎の処理
+  switch (Location.value) {
+    case 'Enter':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Forest';
+      }
+      break;
+    case 'Move_on':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Front';
+      }
+      break;
+    case 'Into':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Lobby';
+      }
+      break;
+    case 'Upstairs1':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Upstairs2';
+        showItem1.value = 1;
+      }
+      break;
+    case 'Upstairs3':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Upstairs4';
+        act_item1 = 1;
+      }
+      break;
+    case 'Back1':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Back2';
+        showItem2.value = 1;
+      }
+      break;
+    case 'Back3':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Back4';
+        act_item2 = 1;
+      }
+      break;
+    case 'Basement1':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Basement2';
+      }
+      break;
+    case 'Basement2':
+      changeShow('Basement3')
+      break;
+    case 'Basement3':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        changeShow('Basement4');
+      }
+      break;
+    case 'Basement4':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Basement5';
+      }
+      break;
+    case 'Basement5':
+      changeShow('Basement6')
+      break;
+    case 'Basement6':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Basement7';
+      }
+      break;
+    case 'Basement7':
+      changeShow('Basement8')
+      break;
+    case 'Basement9':
+      changeShow('Basement10')
+      break;
+    case 'Basement10':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Basement11';
+      }
+      break;
+    case 'Outside1':
+      if (LineIndex < storyLines.value.length) {
+        displayNextLine()
+      } else {
+        window.speechSynthesis.pause();
+        Location.value = 'Outside2';
+      }
+      break;
+    case 'Outside2':
+      changeShow('Outside3')
+      break;
+    default:
+  }
+}
 // 場面転換の初期処理
 function initChange() {
   clearTimeout(timeId);
   clearInterval(txtInterval);
   window.speechSynthesis.cancel();
   showHorror.value = 0;
-  cnt_click = 0;
+  txt_story.value = ['']
+  LineIndex = 0;
 }
 // 音声ゲット
 function get_Voice() {
@@ -691,6 +769,59 @@ function get_Voice() {
     uttr.voice = voice;
   }
 }
+// テキスト読込
+function loadStory(txt) {
+  // 改行コードを統一
+  let text = txt.replace(/\r\n|\r/g, '\n');
+  // 改行ごとに分割して配列に格納
+  let fileLines = text.split('\n');
+  // linesを更新
+  storyLines.value = fileLines;
+}
+
+// 画面をクリックする毎に次の行を表示
+function displayNextLine() {
+  // 1行目の場合
+  if (txt_story.value == '') {
+    readStory(storyLines.value[LineIndex])
+  } else {
+    // 空行は改行コードのみ
+    // if (storyLines.value[LineIndex] == '') {
+    //   txt_story.value[LineIndex] = '\n';
+    // }
+    // 表示中の場合は現在行を全て表示
+    if (txt_story.value[LineIndex].length < storyLines.value[LineIndex].length) {
+      clearInterval(txtInterval);
+      txt_story.value[LineIndex] = storyLines.value[LineIndex]
+    } else {
+      // 表示済みの場合は次の行を表示
+      LineIndex++;
+      if (LineIndex < storyLines.value.length) {
+        readStory(storyLines.value[LineIndex])
+      }
+    }
+  };
+};
+// テキスト表示
+function readStory(txt) {
+  // 空行の場合、改行コードのみ
+  if (txt == '') {
+    txt_story.value[LineIndex] = '\n';
+  } else {
+    // テキストを一文字ずつ表示
+    uttr.text = txt;
+    window.speechSynthesis.speak(uttr);
+    let cnt = 0;
+    txtInterval = setInterval(() => {
+      cnt = cnt + 1;
+      txt_story.value[LineIndex] = txt.substr(0, cnt);
+      if (cnt == txt.length) {
+        clearInterval(txtInterval);
+      }
+    }, 210);
+  }
+}
+
 // エフェクト音再生
 function eft_Play(msc) {
   msc_eft.src = msc;
@@ -725,23 +856,6 @@ function changeMsc(msc) {
   msc_back.src = msc;
   msc_back.play();
 }
-
-// テキスト表示
-function readStory(txt) {
-  // テキストを一文字ずつ表示
-  txt_story.value = '';
-  uttr.text = txt;
-  window.speechSynthesis.speak(uttr);
-  let cnt = 0;
-  txtInterval = setInterval(() => {
-    cnt = cnt + 1;
-    txt_story.value = txt.substr(0, cnt);
-    if (cnt == txt.length) {
-      clearInterval(txtInterval);
-    }
-  }, 210);
-}
-
 // ギャーのアニメーション
 function anime_Horror(image) {
   // back_image.value = "url(" + image + ")";
@@ -776,65 +890,8 @@ function anime_Horror(image) {
   }, 7500);
 }
 
-// 画面をクリックした時
-function displayClick() {
-  cnt_click = cnt_click + 1;
-  // 3回クリックしたら次の展開へ
-  if (cnt_click >= 3) {
-    switch (Location.value) {
-      // 入口 入る
-      case 'Enter':
-        Location.value = 'Forest';
-        break;
-      case 'Move_on':
-        Location.value = 'Front';
-        break;
-      case 'Into':
-        Location.value = 'Lobby';
-        break;
-      case 'Upstairs1':
-        Location.value = 'Upstairs2';
-        showItem1.value = 1;
-        break;
-      case 'Back1':
-        Location.value = 'Back2';
-        showItem2.value = 1;
-        break;
-      case 'Basement1':
-        Location.value = 'Basement2';
-        break;
-      case 'Basement4':
-        Location.value = 'Basement5';
-        break;
-      case 'Basement10':
-        Location.value = 'Basement11';
-        break;
-      default:
-    }
-    cnt_click = 0;
-  }
-  // 特別処理
-  switch (Location.value) {
-    // 地下室の前
-    case 'Basement2':
-      changeShow('Basement3')
-      break;
-    case 'Basement5':
-      changeShow('Basement6')
-      break;
-    case 'Basement7':
-      changeShow('Basement8')
-      break;
-    case 'Basement9':
-      changeShow('Basement10')
-      break;
-    case 'Outside2':
-      changeShow('Outside3')
-      break;
-    default:
-  }
-}
 onMounted(() => {
+  // get_Voice();
   // ページ読み込み完了時
   window.onload = () => {
     alert(msg_alert)
@@ -864,6 +921,7 @@ body {
 }
 
 @media screen and (max-width: 480px) {
+
   /* 480px以下に適用されるCSS（スマホ用） */
   .img-horror {
     position: absolute;
@@ -919,7 +977,7 @@ body {
   /* word-break: normal; */
   font-weight: bold;
   animation: main-title 10s linear;
-  font-size: 68px;
+  font-size: 60px;
   color: #DD0000;
 }
 
@@ -949,7 +1007,7 @@ body {
   border-radius: 10px;
   transition: all 300ms ease-in-out;
   box-shadow: 0 0 10px 4px #999999;
-  background: rgba(21,8,19,0.5);
+  background: rgba(21, 8, 19, 0.5);
 }
 
 .btn-1:hover {
@@ -982,7 +1040,7 @@ body {
 .txt-story {
   font-size: 24px;
   margin: auto;
-  max-width: 700px;
+  max-width: 800px;
   word-break: normal;
   /* text-align: left; */
   color: lightsteelblue;
