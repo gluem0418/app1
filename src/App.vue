@@ -5,7 +5,7 @@
 
       <!-- 物語テキスト表示用 -->
       <!-- <div v-text="txt_story" c></div> -->
-      <div class="txt-story" v-for="(storyline, lineindex) in txt_story" :key="lineindex">
+      <div class="txt-story" v-for="(storyline, LineIndex) in txt_story" :key="LineIndex">
         {{ storyline }}
       </div>
       <!-- <div class="txt-story">
@@ -20,7 +20,7 @@
         </div>
         <div class="btn-1" id="btn-a">
           <button @click="changeShow('Enter')">入る</button>
-          <!-- <button @click="changeShow('Back1')">入る</button> -->
+          <!-- <button @click="changeShow('Outside1')">入る</button> -->
         </div>
         <div class="btn-1" id="btn-b">
           <button onclick="window.history.back()">入らない</button>
@@ -229,8 +229,10 @@ let LineIndex = 0; // 現在表示中の行のインデックス
 let cnt_click = 0;
 let txtInterval = 0;
 let timeId = 0;
+let timeIdE = 0;
 let act_item1 = 0;
 let act_item2 = 0;
+let endflg = 0;
 
 // テキスト音読設定
 const uttr = new SpeechSynthesisUtterance()
@@ -433,20 +435,8 @@ function changeShow(str_select) {
       timeId = setTimeout(() => {
         eft_Play(se_tuchi)
       }, 5000);
-      // エフェクト
-      timeId = setTimeout(() => {
-        // 今の背景フェードアウト
-        anime({
-          targets: '.background',
-          opacity: [1, 0],
-          // scale: [1, 0],
-          duration: 15000,
-          easing: 'easeInCubic' // 加減速の種類
-          // easing: 'linear' // 加減速の種類
-        });
-      }, 15000);
       break;
-    case 'Outside3':
+    case 'Outside2':
       // 場面展開
       txt_story.value = '';
       changeMsc(msc_daten);
@@ -627,7 +617,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Forest';
       }
       break;
@@ -635,7 +624,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Front';
       }
       break;
@@ -643,7 +631,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Lobby';
       }
       break;
@@ -651,7 +638,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Upstairs2';
         showItem1.value = 1;
       }
@@ -660,7 +646,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Upstairs4';
         act_item1 = 1;
       }
@@ -669,7 +654,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Back2';
         showItem2.value = 1;
       }
@@ -678,7 +662,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Back4';
         act_item2 = 1;
       }
@@ -687,7 +670,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Basement2';
       }
       break;
@@ -698,7 +680,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         changeShow('Basement4');
       }
       break;
@@ -706,7 +687,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Basement5';
       }
       break;
@@ -717,7 +697,6 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Basement7';
       }
       break;
@@ -731,20 +710,29 @@ function displayClick() {
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
       } else {
-        window.speechSynthesis.pause();
         Location.value = 'Basement11';
       }
       break;
     case 'Outside1':
       if (LineIndex < storyLines.value.length) {
         displayNextLine()
+        if (LineIndex == 6) {
+          // 今の背景フェードアウト
+          anime({
+            targets: '.background',
+            opacity: [1, 0],
+            duration: 13000,
+            easing: 'linear', // 加減速の種類
+            complete: () => {
+              endflg = 1;
+            },
+          });
+        }
       } else {
-        window.speechSynthesis.pause();
-        Location.value = 'Outside2';
+        if (endflg == 1) {
+          changeShow('Outside2')
+        }
       }
-      break;
-    case 'Outside2':
-      changeShow('Outside3')
       break;
     default:
   }
@@ -753,7 +741,7 @@ function displayClick() {
 function initChange() {
   clearTimeout(timeId);
   clearInterval(txtInterval);
-  window.speechSynthesis.cancel();
+  // window.speechSynthesis.cancel();
   showHorror.value = 0;
   txt_story.value = ['']
   LineIndex = 0;
@@ -809,6 +797,7 @@ function readStory(txt) {
     txt_story.value[LineIndex] = '\n';
   } else {
     // テキストを一文字ずつ表示
+    window.speechSynthesis.cancel();
     uttr.text = txt;
     window.speechSynthesis.speak(uttr);
     let cnt = 0;
@@ -1014,12 +1003,12 @@ body {
   /* box-shadow: 0 0 10px 4px maroon; */
   background: #150813;
 }
-
 #btn-a {
   position: absolute;
   top: 65%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
+  animation: skew 1.5s;
 }
 
 #btn-b {
@@ -1027,6 +1016,7 @@ body {
   top: 85%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
+  animation: skew 1.7s;
 }
 
 #btn-c {
@@ -1034,6 +1024,19 @@ body {
   top: 75%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
+  animation: skew 1.9s;
+}
+
+/* CSSアニメーションの設定 */
+@keyframes skew {
+  0% {
+    opacity: 0;
+    transform: skew(100deg, 100deg);
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /***ストーリー***/
