@@ -1008,7 +1008,7 @@ body {
   top: 65%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  animation: skew 1.5s;
+  animation: show 1.5s;
 }
 
 #btn-b {
@@ -1016,7 +1016,7 @@ body {
   top: 85%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  animation: skew 1.7s;
+  animation: show 1.7s;
 }
 
 #btn-c {
@@ -1024,14 +1024,14 @@ body {
   top: 75%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  animation: skew 1.9s;
+  animation: show 1.9s;
 }
 
 /* CSSアニメーションの設定 */
-@keyframes skew {
+@keyframes show {
   0% {
     opacity: 0;
-    transform: skew(100deg, 100deg);
+    /* transform: skew(100deg, 100deg); */
   }
 
   100% {
@@ -1041,7 +1041,7 @@ body {
 
 /***ストーリー***/
 .txt-story {
-  font-size: 24px;
+  font-size: 22px;
   margin: auto;
   max-width: 800px;
   word-break: normal;
