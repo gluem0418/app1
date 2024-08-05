@@ -1,116 +1,113 @@
 <template>
-  <div id="app">
+  <!-- <div id="app"> -->
 
-    <div class="background" @click="displayClick()">
+  <div class="background" @click="displayClick()">
 
-      <!-- 物語テキスト表示用 -->
-      <!-- <div v-text="txt_story" c></div> -->
+    <div class="story-Box">
       <div class="txt-story" v-for="(storyline, LineIndex) in txt_story" :key="LineIndex">
         {{ storyline }}
       </div>
-      <!-- <div class="txt-story">
-        {{ storytext }}
-      </div> -->
-      <!-- ホラーアニメーション用 -->
-      <img class="img-horror" :src="src_horror" v-show="showHorror">
-      <!-- 最初の表示 -->
-      <div v-if="Location == 'Entrance'">
-        <div class="main-title">
-          The End Of Fear
-        </div>
-        <div class="btn-1" id="btn-a">
-          <button @click="changeShow('Enter')">入る</button>
-          <!-- <button @click="changeShow('Outside1')">入る</button> -->
-        </div>
-        <div class="btn-1" id="btn-b">
-          <button onclick="window.history.back()">入らない</button>
-        </div>
-      </div>
-      <!-- 森の中 -->
-      <div v-if="Location == 'Forest'">
-        <div class="btn-1" id="btn-a">
-          <button @click="changeShow('Move_on')">森を進む</button>
-        </div>
-        <div class="btn-1" id="btn-b">
-          <button @click="changeShow('Exit1')">後ろへ戻る</button>
-        </div>
-      </div>
-      <!-- 館の入口 -->
-      <div v-if="Location == 'Front'">
-        <div class="btn-1" id="btn-a">
-          <button @click="changeShow('Into')">館に入る</button>
-        </div>
-        <div class="btn-1" id="btn-b">
-          <button @click="changeShow('Exit2')">通り過ぎる</button>
-        </div>
-      </div>
-      <!-- 館のロビー -->
-      <div v-if="Location == 'Lobby'">
-        <div class="btn-1" id="btn-a">
-          <button @click="changeShow('Exit4')">地下へ</button>
-        </div>
-        <div class="btn-1" id="btn-c">
-          <button @click="changeShow('Exit3')">1階奥へ</button>
-        </div>
-        <div class="btn-1" id="btn-b">
-          <button @click="changeShow('Upstairs1')">2階へ</button>
-        </div>
-      </div>
-      <!-- 2階 -->
-      <!-- <img class="img-item1" :src="src_item1" @click="changeShow('Upstairs3')" v-show="showItem1"> -->
-      <img class="img-item1" :src="src_item1" @click="getItem('Upstairs3')" v-show="showItem1">
-      <!-- 2階ゲット後 -->
-      <div v-if="Location == 'Upstairs4'">
-        <div class="btn-1" id="btn-a">
-          <button @click="changeShow('Exit5')">地下へ</button>
-        </div>
-        <div class="btn-1" id="btn-b">
-          <button @click="changeShow('Back1')">1階奥へ</button>
-        </div>
-      </div>
-      <!-- 1階奥 -->
-      <img class="img-item2" :src="src_item2" @click="getItem('Back3')" v-show="showItem2">
-      <!-- 1階ゲット後 -->
-      <div v-if="Location == 'Back4'">
-        <div class="btn-1" id="btn-a">
-          <button @click="changeShow('Basement1')">ちかへ</button>
-        </div>
-        <div class="btn-1" id="btn-c">
-          <button @click="changeShow('Basement1')">地下へ</button>
-        </div>
-        <div class="btn-1" id="btn-b">
-          <button @click="changeShow('Basement1')">チカヘ</button>
-        </div>
-      </div>
-      <!-- 地下室前 -->
-      <img class="img-item2" :src="src_item2" v-show="showItem3">
-      <!-- 地下室 -->
-      <img class="img-item3" :src="src_item3" v-show="showItem4">
-      <img class="img-item1" :src="src_item1" v-show="showItem5">
-      <!-- 地下室後 -->
-      <div v-if="Location == 'Basement11'">
-        <div class="btn-1" id="btn-a">
-          <button @click="changeShow('Outside1')">外に出る</button>
-        </div>
-      </div>
-
-      <!-- やられた後 -->
-      <div v-if="Location == 'ReEnter'">
-        <div class="btn-1" id="btn-a">
-          <button @click="changeShow('Enter')">最初から</button>
-        </div>
-        <div class="btn-1" id="btn-b">
-          <button onclick="window.history.back()">もう出る</button>
-        </div>
-      </div>
-
-      <div class="end-title" v-show="showEnd">
+    </div>
+    <!-- ホラーアニメーション用 -->
+    <img class="img-horror" :src="src_horror" v-show="showHorror">
+    <!-- 最初の表示 -->
+    <div v-if="Location == 'Entrance'">
+      <div class="main-title">
         The End Of Fear
       </div>
+      <div class="btn-1" id="btn-a">
+        <!-- <button @click="changeShow('Enter')">入る</button> -->
+        <button @click="changeShow('Outside1')">入る</button>
+      </div>
+      <div class="btn-1" id="btn-b">
+        <button onclick="window.history.back()">入らない</button>
+      </div>
+    </div>
+    <!-- 森の中 -->
+    <div v-if="Location == 'Forest'">
+      <div class="btn-1" id="btn-a">
+        <button @click="changeShow('Move_on')">森を進む</button>
+      </div>
+      <div class="btn-1" id="btn-b">
+        <button @click="changeShow('Exit1')">後ろへ戻る</button>
+      </div>
+    </div>
+    <!-- 館の入口 -->
+    <div v-if="Location == 'Front'">
+      <div class="btn-1" id="btn-a">
+        <button @click="changeShow('Into')">館に入る</button>
+      </div>
+      <div class="btn-1" id="btn-b">
+        <button @click="changeShow('Exit2')">通り過ぎる</button>
+      </div>
+    </div>
+    <!-- 館のロビー -->
+    <div v-if="Location == 'Lobby'">
+      <div class="btn-1" id="btn-a">
+        <button @click="changeShow('Exit4')">地下へ</button>
+      </div>
+      <div class="btn-1" id="btn-c">
+        <button @click="changeShow('Exit3')">1階奥へ</button>
+      </div>
+      <div class="btn-1" id="btn-b">
+        <button @click="changeShow('Upstairs1')">2階へ</button>
+      </div>
+    </div>
+    <!-- 2階 -->
+    <!-- <img class="img-item1" :src="src_item1" @click="changeShow('Upstairs3')" v-show="showItem1"> -->
+    <img class="img-item1" :src="src_item1" @click="getItem('Upstairs3')" v-show="showItem1">
+    <!-- 2階ゲット後 -->
+    <div v-if="Location == 'Upstairs4'">
+      <div class="btn-1" id="btn-a">
+        <button @click="changeShow('Exit5')">地下へ</button>
+      </div>
+      <div class="btn-1" id="btn-b">
+        <button @click="changeShow('Back1')">1階奥へ</button>
+      </div>
+    </div>
+    <!-- 1階奥 -->
+    <img class="img-item2" :src="src_item2" @click="getItem('Back3')" v-show="showItem2">
+    <!-- 1階ゲット後 -->
+    <div v-if="Location == 'Back4'">
+      <div class="btn-1" id="btn-a">
+        <button @click="changeShow('Basement1')">ちかへ</button>
+      </div>
+      <div class="btn-1" id="btn-c">
+        <button @click="changeShow('Basement1')">地下へ</button>
+      </div>
+      <div class="btn-1" id="btn-b">
+        <button @click="changeShow('Basement1')">チカヘ</button>
+      </div>
+    </div>
+    <!-- 地下室前 -->
+    <img class="img-item2" :src="src_item2" v-show="showItem3">
+    <!-- 地下室 -->
+    <img class="img-item3" :src="src_item3" v-show="showItem4">
+    <img class="img-item1" :src="src_item1" v-show="showItem5">
+    <!-- 地下室後 -->
+    <div v-if="Location == 'Basement11'">
+      <div class="btn-1" id="btn-a">
+        <button @click="changeShow('Outside1')">外に出る</button>
+      </div>
+    </div>
 
+    <!-- やられた後 -->
+    <div v-if="Location == 'ReEnter'">
+      <div class="btn-1" id="btn-a">
+        <button @click="changeShow('Enter')">最初から</button>
+      </div>
+      <div class="btn-1" id="btn-b">
+        <button onclick="window.history.back()">もう出る</button>
+      </div>
+    </div>
+
+    <div class="end-title" v-show="showEnd">
+      The End Of Fear
     </div>
 
   </div>
+
+  <!-- </div> -->
 </template>
 
 <script setup>
@@ -463,8 +460,9 @@ function changeShow(str_select) {
           targets: '.img-horror',
           opacity: [0, 1],
           scale: [0, 1],
-          translateY: [1000, 200],
-          translateX: [200, 0],
+          // translateY: [1000, 200],
+          // translateX: [200, 0],
+          translateY: [1000, 150],
           duration: 1000,
           easing: 'easeInOutBounce', // 加減速の種類
         });
@@ -905,8 +903,26 @@ body {
   text-align: center;
 }
 
+.story-Box {
+  padding-top: 2vh;
+  font-size: 22px;
+  text-align: center;
+  word-break: normal;
+  /* text-align: left; */
+  color: lightsteelblue;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+
+.txt-story {
+  margin: auto;
+  max-width: 800px;
+}
+
 .img-horror {
-  margin: auto
+  /* margin-top: 10vh; */
+  height: 100%;
+  width: auto;
 }
 
 @media screen and (max-width: 480px) {
@@ -1003,6 +1019,7 @@ body {
   /* box-shadow: 0 0 10px 4px maroon; */
   background: #150813;
 }
+
 #btn-a {
   position: absolute;
   top: 65%;
@@ -1037,17 +1054,5 @@ body {
   100% {
     opacity: 1;
   }
-}
-
-/***ストーリー***/
-.txt-story {
-  font-size: 22px;
-  margin: auto;
-  max-width: 800px;
-  word-break: normal;
-  /* text-align: left; */
-  color: lightsteelblue;
-  overflow: hidden;
-  white-space: pre-wrap;
 }
 </style>
