@@ -7,7 +7,8 @@ import * as path from 'path';
 // const path = require('path')
 
 export default defineConfig({
-  base: '/app1/', //追加
+  // base: '/app1/', //追加
+  base: './', //追加
   plugins: [
     vue(),
     vuetify({
@@ -15,6 +16,11 @@ export default defineConfig({
     }),
   ],
   define: { 'process.env': {} },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    // sourcemap: true,
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

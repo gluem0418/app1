@@ -522,7 +522,7 @@ function get_Voice() {
 async function loadStory(txt, type) {
   let text
   if (type == 1) {
-    const response = await fetch(`/${txt}`);
+    const response = await fetch(`${txt}`);
     const getText = await response.text();
     text = getText.replace(/\r\n|\r/g, '\n');
   } else {
