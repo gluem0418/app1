@@ -1,0 +1,52 @@
+[
+    {
+        "id": "exit1",
+        "img": "img/horror1.png",
+        "effect1": "",
+        "effect2": "audio/se/9_tasukete.wav",
+        "effect2Time": 2500,
+        "effect3": "audio/se/gyaaaa_d.wav",
+        "effect3Time": 2500,
+        "text": "戻ろうとした瞬間、背後から突然"
+    },
+    {
+        "id": "exit2",
+        "img": "img/horror2.jpg",
+        "effect1": "audio/se/土の上を歩く.mp3",
+        "effect2": "audio/se/nigasanai.wav",
+        "effect2Time": 2500,
+        "effect3": "audio/se/gyaaaa_d.wav",
+        "effect3Time": 2500,
+        "text": "不気味なので、迂回しようとすると"
+    },
+    {
+        "id": "exit3",
+        "img": "img/horror4.png",
+        "effect1": "audio/se/足音・スポーツシューズ.mp3",
+        "effect2": "audio/se/anatanoushiro.wav",
+        "effect2Time": 2500,
+        "effect3": "audio/se/gyaaaa_d.wav",
+        "effect3Time": 2500,
+        "text": "地下への階段へと向かおうとすると"
+    },
+    {
+        "id": "exit4",
+        "img": "img/horror3.png",
+        "effect1": "audio/se/足音・スポーツシューズ.mp3",
+        "effect2": "audio/se/dareda.wav",
+        "effect2Time": 2500,
+        "effect3": "audio/se/gyaaaa_d.wav",
+        "effect3Time": 2500,
+        "text": "奥に誰かの気配がしたので進むと"
+    },
+    {
+        "id": "exit5",
+        "img": "img/horror5.jpg",
+        "effect1": "audio/se/足音・スポーツシューズ.mp3",
+        "effect2": "audio/se/kimokimo.wav",
+        "effect2Time": 2500,
+        "effect3": "audio/se/kaibutu_gaaa.wav",
+        "effect3Time": 2500,
+        "text": "地下への階段を下りていくと、突然"
+    }
+]

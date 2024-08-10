@@ -1,0 +1,134 @@
+[
+    {
+        "id": "entrance",
+        "nextId": "",
+        "background": "img/forest1.jpg",
+        "music": "",
+        "effect1": "",
+        "effect2": "",
+        "effectTime": "",
+        "text": ""
+    },
+    {
+        "id": "forest",
+        "nextId": "forestChoice",
+        "background": "img/forest2.jpg",
+        "music": "audio/bgm/z44.mp3",
+        "effect1": "audio/se/土の上を歩く.mp3",
+        "effect2": "",
+        "effectTime": "",
+        "text": "text/story1.txt"
+    },
+    {
+        "id": "front",
+        "nextId": "frontChoice",
+        "background": "img/mansion1.jpg",
+        "music": "audio/bgm/k6.mp3",
+        "effect1": "audio/se/土の上を歩く.mp3",
+        "effect2": "",
+        "effectTime": "",
+        "text": "text/story2.txt?raw"
+    },
+    {
+        "id": "lobby",
+        "nextId": "lobbyChoice",
+        "background": "img/entrance1.jpg",
+        "music": "audio/bgm/v6.mp3",
+        "effect1": "audio/se/門を開ける.mp3",
+        "effect2": "audio/se/ドア・大扉閉める02.mp3",
+        "effectTime": 3000,
+        "text": "text/story3.txt?raw"
+    },
+    {
+        "id": "upstairs1",
+        "nextId": "upstairs2",
+        "background": "img/upstairs1.jpg",
+        "music": "audio/bgm/n105.mp3",
+        "effect1": "audio/se/足音・スポーツシューズ.mp3",
+        "effect2": "",
+        "effectTime": "",
+        "text": "text/story4.txt?raw"
+    },
+    {
+        "id": "backSide1",
+        "nextId": "backSide2",
+        "background": "img/back1.jfif",
+        "music": "audio/bgm/n24.mp3",
+        "effect1": "audio/se/足音・スポーツシューズ.mp3",
+        "effect2": "audio/se/moujya2.wav",
+        "effectTime": 10000,
+        "text": "text/story6.txt?raw"
+    },
+    {
+        "id": "frontDoor1",
+        "nextId": "frontDoor2",
+        "background": "img/basement1.jfif",
+        "music": "audio/bgm/v7.mp3",
+        "effect1": "audio/se/足音・スポーツシューズ.mp3",
+        "effect2": "audio/se/6zowawa.wav",
+        "effectTime": 7000,
+        "text": "text/story8.txt?raw"
+    },
+
+    {
+        "id": "frontDoor2",
+        "nextId": "frontDoor3",
+        "background": "",
+        "music": "",
+        "effect1": "audio/se/鍵を開ける1.mp3",
+        "effect2": "audio/se/門を開ける.mp3",
+        "effectTime": 2000,
+        "text": "text/story9.txt?raw"
+    },
+
+    {
+        "id": "basement1",
+        "nextId": "basement2",
+        "background": "img/basement2.jfif",
+        "music": "",
+        "effect1": "audio/se/kimokimo.wav",
+        "effect2": "audio/se/kimokimo.wav",
+        "effectTime": 10000,
+        "text": "text/story10.txt?raw"
+    },
+    {
+        "id": "basement2",
+        "nextId": "basement3",
+        "background": "",
+        "music": "audio/bgm/n137.mp3",
+        "effect1": "audio/se/monster_roaning3.mp3",
+        "effect2": "audio/se/kaibutu_gaaa.wav",
+        "effectTime": 6000,
+        "text": "text/story11.txt?raw"
+    },
+    {
+        "id": "basement6",
+        "nextId": "basementChoice",
+        "background": "",
+        "music": "audio/bgm/v2.mp3",
+        "effect1": "audio/se/devil_groaning3.mp3",
+        "effect2": "",
+        "effectTime": "",
+        "text": "text/story12.txt?raw"
+    },
+    {
+        "id": "outside1",
+        "nextId": "outside2",
+        "background": "img/forest3.jpg",
+        "music": "",
+        "effect1": "audio/se/足音・スポーツシューズ.mp3",
+        "effect2": "audio/se/土の上を歩く.mp3",
+        "effectTime": 5000,
+        "text": "text/story13.txt?raw"
+    },
+    {
+        "id": "outside2",
+        "nextId": "",
+        "background": "",
+        "music": "audio/bgm/MusMus-BGM-110.mp3",
+        "effect1": "audio/se/nigasanai.wav",
+        "effect2": "audio/se/kaibutu_gaaa.wav",
+        "effectTime": 2500,
+        "text": ""
+    }
+]

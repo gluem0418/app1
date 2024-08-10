@@ -1,0 +1,110 @@
+[
+    {
+        "id": "entrance",
+        "choices": [
+            {
+                "text": "入る",
+                "nextId": "forest"
+            },
+            {
+                "text": "入らない",
+                "nextId": "back"
+            }
+        ]
+    },
+    {
+        "id": "forestChoice",
+        "choices": [
+            {
+                "text": "森を進む",
+                "nextId": "front"
+            },
+            {
+                "text": "後ろへ戻る",
+                "nextId": "exit1"
+            }
+        ]
+    },
+    {
+        "id": "frontChoice",
+        "choices": [
+            {
+                "text": "館に入る",
+                "nextId": "lobby"
+            },
+            {
+                "text": "通り過ぎる",
+                "nextId": "exit2"
+            }
+        ]
+    },
+    {
+        "id": "lobbyChoice",
+        "choices": [
+            {
+                "text": "地下へ",
+                "nextId": "exit3"
+            },
+            {
+                "text": "2階へ",
+                "nextId": "upstairs1"
+            },
+            {
+                "text": "1階奥へ",
+                "nextId": "exit4"
+            }
+        ]
+    },
+    {
+        "id": "upstairsChoice",
+        "choices": [
+            {
+                "text": "地下へ",
+                "nextId": "exit5"
+            },
+            {
+                "text": "1階奥へ",
+                "nextId": "backSide1"
+            }
+        ]
+    },
+    {
+        "id": "backSideChoice",
+        "choices": [
+            {
+                "text": "ちかへ",
+                "nextId": "frontDoor1"
+            },
+            {
+                "text": "地下へ",
+                "nextId": "frontDoor1"
+            },
+            {
+                "text": "チカヘ",
+                "nextId": "frontDoor1"
+            }
+        ]
+    },
+    {
+        "id": "basementChoice",
+        "choices": [
+            {
+                "text": "外に出る",
+                "nextId": "outside1"
+            }
+        ]
+    },
+    {
+        "id": "reEnter",
+        "choices": [
+            {
+                "text": "最初から",
+                "nextId": "forest"
+            },
+            {
+                "text": "もう出る",
+                "nextId": "back"
+            }
+        ]
+    }
+]

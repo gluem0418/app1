@@ -2,14 +2,14 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 
-const path = require('path')
+import * as path from 'path';
 
-// https://vitejs.dev/config/
+// const path = require('path')
+
 export default defineConfig({
   base: '/app1/', //追加
   plugins: [
     vue(),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
     vuetify({
       autoImport: true,
     }),
