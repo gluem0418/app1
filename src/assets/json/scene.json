@@ -2,7 +2,7 @@
     {
         "id": "entrance",
         "nextId": "",
-        "background": "/img/forest1.jpg",
+        "background": "./img/forest1.jpg",
         "music": "",
         "effect1": "",
         "effect2": "",
