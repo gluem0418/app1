@@ -2,8 +2,6 @@
   <!-- <div class="background" @click="displayClick()"> -->
   <div :style="{ backgroundImage: back_image }" class="background" @click="displayClick()">
 
-    <!-- ホラーアニメーション用 -->
-    <img class="img-horror" :src="src_horror" v-show="showHorror">
     <!-- 最初の表示 -->
     <div v-if="currentSceneId == 'entrance'">
       <div class="main-title">{{ title }}</div>
@@ -25,6 +23,8 @@
         {{ storyline }}
       </div>
     </div>
+    <!-- ホラーアニメーション用 -->
+    <img class="img-horror" :src="src_horror" v-show="showHorror">
     <!-- 場面毎の選択肢 -->
     <div v-if="currentChoice">
       <div v-for="(choice, index) in currentChoice.choices" :key="index">
@@ -635,7 +635,8 @@ function anime_Horror(image) {
     opacity: [0, 1],
     scale: [0, 0.5, 0.1, 1],
     duration: 5000,
-    rotate: 360,
+    // rotate: 360,
+    rotate: [0, randRange(-100, 100), randRange(-100, 100), 0],
     easing: 'easeInOutBounce', // 加減速の種類
     complete: function (anim) { //callback関数
       anime.set('.img-horror', {
@@ -674,6 +675,7 @@ body {
   color: lightsteelblue;
   overflow: hidden;
   white-space: pre-wrap;
+  z-index: 10;
 }
 
 .txt-story {
@@ -738,6 +740,7 @@ body {
   font-weight: bold;
   animation: main-title 8s linear;
   font-size: 60px;
+  z-index: 10;
   color: #DD0000;
 }
 
@@ -767,6 +770,7 @@ body {
   transition: all 300ms ease-in-out;
   box-shadow: 0 0 10px 4px #999999;
   background: rgba(21, 8, 19, 0.5);
+  z-index: 11;
 }
 
 .btn1:hover {
