@@ -1,5 +1,6 @@
 <template>
-  <div class="background" @click="displayClick()">
+  <!-- <div class="background" @click="displayClick()"> -->
+  <div :style="{ backgroundImage: back_image }" class="background" @click="displayClick()">
 
     <!-- ホラーアニメーション用 -->
     <img class="img-horror" :src="src_horror" v-show="showHorror">
@@ -657,7 +658,7 @@ body {
 }
 
 .background {
-  background-image: v-bind(back_image);
+  /* background-image: v-bind(back_image); */
   background-position: center top;
   height: 100vh;
   max-width: 1024px;
