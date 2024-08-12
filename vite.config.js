@@ -7,8 +7,8 @@ import * as path from 'path';
 // const path = require('path')
 
 export default defineConfig({
-  base: '/app1/', //追加
-  // base: './', //追加
+  // base: '/app1/', //追加
+  base: './', //追加
   plugins: [
     vue(),
     vuetify({
