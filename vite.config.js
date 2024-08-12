@@ -16,11 +16,11 @@ export default defineConfig({
     }),
   ],
   define: { 'process.env': {} },
-  // build: {
-  //   outDir: 'dist',
-  //   assetsDir: 'assets',
-  //   // sourcemap: true,
-  // },
+  build: {
+    outDir: 'docs',
+    // assetsDir: 'assets',
+    // sourcemap: true,
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
