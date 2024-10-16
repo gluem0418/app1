@@ -66,7 +66,7 @@ import txt_story7 from "/text/story7.txt?raw";
 /////////////////////////////////////////
 //現在のシーンid
 const currentSceneId = ref("entrance");
-// const currentSceneId = ref("frontDoor1");
+// const currentSceneId = ref("outside1");
 //背景画像
 const back_image = ref("")
 //現在のシーン
@@ -668,11 +668,13 @@ body {
 }
 
 .story-Box {
-  padding-top: 2vh;
+  padding-top: 3vh;
   font-size: 22px;
   text-align: center;
   word-break: normal;
-  color: lightsteelblue;
+  /* color: #e8d0d0e9; */
+  color: #dbdbf1f3;
+  /* color: lightsteelblue; */
   overflow: hidden;
   white-space: pre-wrap;
   z-index: 10;
@@ -722,7 +724,7 @@ body {
 /* タイトル */
 .main-title {
   font-family: "Segoe Script";
-  margin: auto;
+  padding-top: 5vh;
   overflow: hidden;
   font-weight: bold;
   animation: main-title 5s linear;
